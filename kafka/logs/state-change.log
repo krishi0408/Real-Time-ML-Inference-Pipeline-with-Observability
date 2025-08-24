@@ -157,3 +157,4 @@
 [2025-08-24 14:13:54,391] INFO [Broker id=0] Leader __consumer_offsets-28 with topic id Some(ssGiN-4aSRmru6ancqd8ag) starts at leader epoch 0 from offset 0 with partition epoch 0, high watermark 0, ISR [0], adding replicas [] and removing replicas [] . Previous leader None and previous leader epoch was -1. (state.change.logger)
 [2025-08-24 14:13:54,401] INFO [Broker id=0] Finished LeaderAndIsr request in 429ms correlationId 3 from controller 0 for 50 partitions (state.change.logger)
 [2025-08-24 14:13:54,402] INFO [Broker id=0] Add 50 partitions and deleted 0 partitions from metadata cache in response to UpdateMetadata request sent by controller 0 epoch 1 with correlation id 4 (state.change.logger)
+[2025-08-24 14:43:13,410] INFO [Controller id=0 epoch=1] Sending UpdateMetadata request to brokers HashSet() for 0 partitions (state.change.logger)
