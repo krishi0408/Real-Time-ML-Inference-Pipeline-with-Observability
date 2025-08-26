@@ -1,21 +1,25 @@
-# This script is a Kafka producer that continuously generates and sends random data (simulating Iris flower features) to a Kafka topic.
-# Import Kafka producer
 from confluent_kafka import Producer
-import json, time, random
+import json, time, random, os
 
-# Connects to kafka broker running at loacalhost 9092
-p = Producer({'bootstrap.servers': 'localhost:9092'})
-topic = "events"
+# Read environment variables (default fallback if not set)
+KAFKA_BROKER = os.environ.get("KAFKA_BROKER", "localhost:9092")
+TOPIC = os.environ.get("KAFKA_TOPIC", "events")
 
-# Runs forever in loop generating random message with four floating point numbers
+# Kafka Producer
+p = Producer({'bootstrap.servers': KAFKA_BROKER})
+
+print(f"[Producer] Sending messages to topic '{TOPIC}' on broker {KAFKA_BROKER}")
+
+# Runs forever generating random messages
 while True:
-    msg = {"f1": random.uniform(4,8), "f2": random.uniform(2,4),
-           "f3": random.uniform(1,6), "f4": random.uniform(0,3)}
-# Converts python dict to JSON and encodes it to bytes
-# Send messages to the event kafka topic
-    p.produce(topic, json.dumps(msg).encode("utf-8"))
+    msg = {
+        "f1": random.uniform(4, 8),
+        "f2": random.uniform(2, 4),
+        "f3": random.uniform(1, 6),
+        "f4": random.uniform(0, 3),
+    }
+    # Convert dict -> JSON -> bytes
+    p.produce(TOPIC, json.dumps(msg).encode("utf-8"))
     print("Produced:", msg)
-# Ensures message is actually sent before continuing
-    p.flush()
-# Makes it produce one message per second
+    p.flush()   # ensure delivery
     time.sleep(1)
